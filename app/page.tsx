@@ -49,9 +49,10 @@ const lessons = [
 ]
 
 const testimonials = [
-  ['LM', 'Por fin una forma de aprender que sí encaja conmigo.', 'Laura M.'],
-  ['JR', '¡Increíble método! He mejorado mi conversación en solo semanas.', 'Juan R.'],
-  ['AS', 'Los profesores son súper dedicados. Recomendado.', 'Ana S.'],
+  ['PM', 'Mi hijo va feliz a sus clases de inglés y he visto un avance increíble en su confianza y pronunciación. ¡El método realmente funciona!', 'Patricia M.', 'Papa de Alumno'],
+  ['DC', 'Las clases son súper dinámicas, nada de gramática aburrida. Siento que por fin hablo inglés sin miedo.', 'Diego C.', 'Estudiante Activo'],
+  ['AL', 'Terminé el programa con mucha más seguridad y ahora uso el inglés en mi trabajo todos los días.', 'Andrea L.', 'Egresado ETC'],
+  ['VM', 'Me encanta que cada clase tenga juegos y retos nuevos. Aprender inglés se siente como algo mío.', 'Valentina M.', 'Estudiante Young Adults'],
 ]
 
 export default function Page() {
@@ -103,7 +104,7 @@ export default function Page() {
 
       <section className="hero" id="top"><div className="container hero-grid"><div className="hero-copy"><div className="hero-badge"><span aria-hidden="true">📍</span> Acarigua, Edo. Portuguesa</div><h1>¡Aprender inglés nunca había sido tan fácil!</h1><p>Descubre un método dinámico, clases interactivas y el acompañamiento que necesitas para hablar con confianza desde el primer día.</p><form className="search-form" onSubmit={submitSearch}><Search aria-hidden="true" /><input id="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="¿Qué quieres aprender hoy?" aria-label="Buscar una lección" /><button type="submit" className="search-submit" aria-label="Buscar"><ArrowRight aria-hidden="true" /></button></form>{searchMessage && <p className="form-message" role="status">{searchMessage}</p>}<div className="hero-features"><span>⚡ Cursos interactivos</span><span>🎮 Juegos educativos</span><span>📜 Certificados</span></div></div></div></section>
 
-      <section className="proof-row" aria-label="Opiniones de estudiantes"><div className="container testimonial-grid">{testimonials.map(([initials, quote, name], index) => <article className={`testimonial-card ${index === testimonialIndex ? 'is-featured' : ''}`} key={name}><div className="stars" aria-label="5 de 5 estrellas">★★★★★</div><p>“{quote}”</p><div className="student-meta"><span className="quote-avatar">{initials}</span><strong>{name}</strong><span className="verified">Estudiante verificada</span></div></article>)}</div></section>
+      <section className="proof-row" aria-label="Opiniones de estudiantes, padres y egresados"><div className="container testimonial-grid">{testimonials.map(([initials, quote, name, category], index) => <article className={`testimonial-card ${index === testimonialIndex ? 'is-featured' : ''}`} key={name}><span className={`testimonial-category category-${index + 1}`}>{category}</span><div className="stars" aria-label="5 de 5 estrellas">★★★★★</div><p>“{quote}”</p><div className="student-meta"><span className="quote-avatar">{initials}</span><strong>{name}</strong><span className="verified">Comunidad ETC</span></div></article>)}</div></section>
 
       <section className="section" id="courses"><div className="container"><div className="section-heading"><div><p className="eyebrow">APRENDE A TU RITMO</p><h2>Encuentra tu próximo <em>nivel.</em></h2></div><a className="text-link" href="#all-courses">Ver todos los cursos <ArrowRight aria-hidden="true" /></a></div><div className="course-grid">{courses.map((course) => <article className={`course-card ${course.color}`} key={course.title}><div className="course-card-top"><span className="level-tag">{course.level}</span><BookOpen aria-hidden="true" /></div><h3>{course.title}</h3><p>{course.description}</p><div className="course-meta"><span><BookOpen aria-hidden="true" /> {course.lessons}</span><span><Clock3 aria-hidden="true" /> {course.time}</span></div><a className="course-cta" href={`#course-${course.title.toLowerCase().replaceAll(' ', '-')}`}><span>Explorar curso</span><ArrowRight aria-hidden="true" /></a></article>)}</div></div></section>
 

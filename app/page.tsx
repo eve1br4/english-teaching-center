@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import {
   ArrowRight,
@@ -63,6 +63,7 @@ export default function Page() {
   const [email, setEmail] = useState('')
   const [newsletterMessage, setNewsletterMessage] = useState('')
   const [testimonialIndex, setTestimonialIndex] = useState(0)
+  const testimonialScroller = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -70,6 +71,11 @@ export default function Page() {
     }, 6000)
     return () => window.clearInterval(interval)
   }, [])
+
+  const selectTestimonial = (index: number) => {
+    setTestimonialIndex(index)
+    testimonialScroller.current?.children[index]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
+  }
 
   const speak = (word: string) => {
     if ('speechSynthesis' in window) {
@@ -101,9 +107,9 @@ export default function Page() {
         <div className="header-actions"><button className="icon-button" aria-label="Buscar" onClick={() => document.getElementById('search')?.focus()}><Search aria-hidden="true" /></button><button className="language" type="button">ES <ChevronDown aria-hidden="true" /></button><a className="login-link" href="#login">Entrar</a><a className="button button-small header-cta" href="#signup">¡Inscríbete!</a><button className="menu-button" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button></div>
       </div>{menuOpen && <nav className="mobile-nav" aria-label="Navegación móvil"><a href="#courses" onClick={() => setMenuOpen(false)}>Cursos</a><a href="#lessons" onClick={() => setMenuOpen(false)}>Lecciones</a><a href="#practice" onClick={() => setMenuOpen(false)}>Practica</a><a href="#resources" onClick={() => setMenuOpen(false)}>Recursos</a><a href="#login">Entrar</a></nav>}</header>
 
-      <section className="hero" id="top"><div className="container hero-grid"><div className="hero-copy"><div className="hero-badge"><span aria-hidden="true">●</span> Acarigua, Edo. Portuguesa</div><h1>¡Aprender inglés nunca había sido tan fácil!</h1><p>Descubre un método dinámico, clases interactivas y el acompañamiento que necesitas para hablar con confianza desde el primer día.</p><form className="search-form" onSubmit={submitSearch}><Search aria-hidden="true" /><input id="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="¿Qué quieres aprender hoy?" aria-label="Buscar una lección" /><button type="submit" className="search-submit" aria-label="Buscar"><ArrowRight aria-hidden="true" /></button></form>{searchMessage && <p className="form-message" role="status">{searchMessage}</p>}</div></div></section>
+      <section className="hero" id="top"><div className="container hero-grid"><div className="hero-copy"><h1>¡Aprender inglés nunca había sido tan fácil!</h1><p>Descubre un método dinámico, clases interactivas y el acompañamiento que necesitas para hablar con confianza desde el primer día.</p><form className="search-form" onSubmit={submitSearch}><Search aria-hidden="true" /><input id="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="¿Qué quieres aprender hoy?" aria-label="Buscar una lección" /><button type="submit" className="search-submit" aria-label="Buscar"><ArrowRight aria-hidden="true" /></button></form>{searchMessage && <p className="form-message" role="status">{searchMessage}</p>}</div></div></section>
 
-      <section className="proof-row" aria-label="Opiniones de estudiantes"><div className="container testimonial-grid">{testimonials.map(([initials, quote, name, audience], index) => <article className={`testimonial-card ${index === testimonialIndex ? 'is-featured' : ''}`} key={name}><div className="testimonial-ribbon">{audience}</div><div className="stars" aria-label="5 de 5 estrellas">★★★★★</div><p>“{quote}”</p><div className="student-meta"><span className="quote-avatar">{initials}</span><strong>{name}</strong><span className="verified">Estudiante verificada</span></div></article>)}</div></section>
+      <section className="proof-row" aria-label="Opiniones de estudiantes"><div className="container testimonial-carousel"><div className="testimonial-grid" ref={testimonialScroller}>{testimonials.map(([initials, quote, name, audience], index) => <article className={`testimonial-card ${index === testimonialIndex ? 'is-featured' : ''}`} key={name}><div className="testimonial-ribbon">{audience}</div><div className="stars" aria-label="5 de 5 estrellas">★★★★★</div><p>“{quote}”</p><div className="student-meta"><span className="quote-avatar">{initials}</span><strong>{name}</strong><span className="verified">Estudiante verificada</span></div></article>)}</div><div className="carousel-dots" aria-label="Seleccionar testimonio">{testimonials.map(([, , name], index) => <button key={name} className={index === testimonialIndex ? 'is-active' : ''} aria-label={`Ver testimonio de ${name}`} aria-current={index === testimonialIndex} onClick={() => selectTestimonial(index)} />)}</div></div></section>
 
       <section className="section" id="courses"><div className="container"><div className="section-heading"><div><p className="eyebrow">APRENDE A TU RITMO</p><h2>Encuentra tu próximo <em>nivel.</em></h2></div><a className="text-link" href="#all-courses">Ver todos los cursos <ArrowRight aria-hidden="true" /></a></div><div className="course-grid">{courses.map((course) => { const CourseIcon = course.icon; return <article className={`course-card ${course.color}`} key={course.title}><div className="course-visual"><CourseIcon aria-hidden="true" /></div><div className="course-card-top"><span className="level-tag">{course.level}</span><CourseIcon aria-hidden="true" /></div><h3>{course.title}</h3><p>{course.description}</p><div className="course-meta"><span><BookOpen aria-hidden="true" /> {course.lessons}</span><span><Clock3 aria-hidden="true" /> {course.time}</span></div><a className="course-cta" href={`#course-${course.title.toLowerCase().replaceAll(' ', '-')}`}><span>Explorar curso</span><ArrowRight aria-hidden="true" /></a></article> })}</div></div></section>
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import {
   ArrowRight,
+  Award,
   BookOpen,
   Check,
   ChevronDown,
@@ -26,12 +27,10 @@ import {
 } from 'lucide-react'
 
 const courses = [
-  { level: 'A1–A2', title: 'Básico', description: 'Construye una base sólida y empieza a comunicarte con confianza.', lessons: '42 lecciones', time: '6 h 20 min', color: 'blue' },
-  { level: 'B1–B2', title: 'Intermedio', description: 'Amplía tu vocabulario y expresa tus ideas con naturalidad.', lessons: '58 lecciones', time: '8 h 45 min', color: 'orange' },
-  { level: 'C1–C2', title: 'Avanzado', description: 'Perfecciona tu precisión para dominar conversaciones complejas.', lessons: '36 lecciones', time: '5 h 10 min', color: 'navy' },
-  { level: 'PRO', title: 'Inglés de negocios', description: 'Reuniones, presentaciones y emails que dejan huella.', lessons: '24 lecciones', time: '3 h 40 min', color: 'orange' },
-  { level: 'TRAVEL', title: 'Inglés para viajar', description: 'Todo lo que necesitas para moverte por el mundo.', lessons: '18 lecciones', time: '2 h 15 min', color: 'blue' },
-  { level: 'SPEAK', title: 'Pronunciación', description: 'Suena más claro y natural con práctica guiada.', lessons: '30 lecciones', time: '4 h 05 min', color: 'navy' },
+  { level: 'A1–A2', title: 'Nivel Básico', description: 'Empieza desde cero y construye una base para comunicarte.', lessons: '42 lecciones', time: '6 h 20 min', color: 'blue', icon: BookOpen },
+  { level: 'B1–B2', title: 'Nivel Intermedio', description: 'Habla con más soltura y expresa tus ideas con naturalidad.', lessons: '58 lecciones', time: '8 h 45 min', color: 'orange', icon: MessageSquare },
+  { level: 'C1–C2', title: 'Nivel Avanzado', description: 'Perfecciona tu precisión para conversaciones complejas.', lessons: '36 lecciones', time: '5 h 10 min', color: 'navy', icon: GraduationCap },
+  { level: 'PRO', title: 'Inglés Profesional', description: 'Impulsa reuniones, presentaciones y emails con confianza.', lessons: '24 lecciones', time: '3 h 40 min', color: 'violet', icon: Award },
 ]
 
 const words = [
